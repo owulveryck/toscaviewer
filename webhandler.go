@@ -25,7 +25,7 @@ func displaySvg(w http.ResponseWriter, r *http.Request, topology toscalib.Topolo
 		fmt.Println("An error occured: ", err) //replace with logger, or anything you want
 
 	}
-	topology.PrintDot(stdin)
+	PrintDot(stdin, topology)
 	// Command was successful
 	stdin.Close()
 	subProcess.Wait()
