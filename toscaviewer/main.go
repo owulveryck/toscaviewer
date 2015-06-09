@@ -9,12 +9,16 @@ import (
 	"github.com/owulveryck/toscalib"
 	"github.com/owulveryck/toscaviewer"
 	"gopkg.in/yaml.v2"
+	"flag"
 )
 
 func main() {
 
+	var testFile = flag.String("testfile","../examples/tosca_single_instance_wordpress.yaml", "a tosca yaml file to process")
+	flag.Parse()
+
 	var topologyTemplate toscalib.TopologyTemplateStruct
-	file, err := ioutil.ReadFile("../examples/tosca_single_instance_wordpress.yaml")
+	file, err := ioutil.ReadFile(*testFile)
 	if err != nil {
 		log.Panic("error: ", err)
 	}
