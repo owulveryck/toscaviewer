@@ -1,0 +1,9 @@
+digraph layer7 {
+    Startlayer7 -> DeployInstit
+    Startlayer7 -> SetupData
+    SetupData -> DeployProducteur
+    SetupData -> DeployConsommateur
+    DeployProducteur -> DeployConsommateur
+    DeployConsommateur -> EndOfShow
+    DeployInstit -> EndOfShow
+}

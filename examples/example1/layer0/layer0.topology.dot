@@ -1,0 +1,27 @@
+digraph layer1 {
+	/* admin */
+	admin -> web01;
+	admin -> web02;
+	admin -> web03;
+	admin -> mdw01;
+	admin -> mdw02;
+	admin -> db01;
+	admin -> db02;
+
+	/*web*/
+	web01 -> web02;
+	web01 -> web03;
+	web02 -> web01;
+	web02 -> web03;
+	web03 -> web01;
+	web03 -> web02;
+
+	/*mdw*/
+	mdw01 -> mdw02;
+	mdw02 -> mdw01;
+
+	/*db*/
+	db01 -> db02;
+	db02 -> db01;
+	
+}

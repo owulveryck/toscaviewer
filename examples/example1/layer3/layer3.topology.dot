@@ -1,0 +1,6 @@
+digraph layer3 {
+	layer3 -> WebServer;
+	layer3 -> Middleware;
+	layer3 -> Database;
+
+}

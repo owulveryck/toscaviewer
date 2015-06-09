@@ -1,0 +1,61 @@
+{
+   "nodes":[
+      {
+         "name":"web01",
+         "hostname":"web01.local",
+         "user":"useradm",
+         "layer3":"WebsServers",
+         "layer5":"StaticInstance",
+         "layer7":"FancyPics"
+      },
+      {
+         "name":"web02",
+         "hostname":"web02.local",
+         "user":"useradm",
+         "layer3":"WebsServers",
+         "layer5":"StaticInstance",
+         "layer7":"FancyPics"
+      },
+      {
+         "name":"web03",
+         "hostname":"web03.local",
+         "user":"useradm",
+         "layer3":"WebsServers",
+         "layer5":"StaticInstance",
+         "layer7":"FancyPics"
+      },
+      {
+         "name":"mdw01",
+         "hostname":"mdw01.local",
+         "user":"useradm",
+         "layer3":"Middleware",
+         "layer5":"Weblogic Consumer",
+         "layer7":"Consumer"
+      },
+      {
+         "name":"mdw02",
+         "hostname":"mdw02.local",
+         "user":"useradm",
+         "layer3":"Middleware",
+         "layer5":"Weblogic Producer",
+         "layer7":"Producer"
+      },
+      {
+         "name":"db01",
+         "hostname":"db01.local",
+         "user":"useradm",
+         "layer3":"Database",
+         "layer5":"Dataguard Master",
+         "layer7":"SqlData"
+      },
+      {
+         "name":"db02",
+         "hostname":"db02.local",
+         "user":"useradm",
+         "layer3":"Database",
+         "layer5":"Dataguard Slave",
+         "layer7":"SqlData"
+      }
+   ]
+}
+

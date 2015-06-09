@@ -1,0 +1,4 @@
+#!/bin/ksh
+
+# Sleeps for a random 1..10 seconds
+sleep $((RANDOM%10))

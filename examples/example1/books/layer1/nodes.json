@@ -1,0 +1,81 @@
+{
+  "Roles": [
+    {
+      "Type": "Consumer_maitre",
+      "nodes": [
+        {
+          "hostname": "MacBook-Pro-de-Olivier.local",
+          "user": "useradm",
+          "access": [
+		{
+		"path": "principal"
+		"driver": "ssh"
+		"arguments": "port=22;user=$user;hostname=localhost;keyfile=~/.ssh/id_rsa"
+		},
+	  {
+		"path": "admin"
+		"driver": "ssh"
+		"arguments": "port=22;user=admin;hostname=127.0.0.1;keyfile=~/.ssh/id_rsa"
+		}]
+          "datasource": [
+            {
+              "driver": "EARTH",
+              "name": "technical_tokens"
+            },
+            {
+              "driver": "FILE",
+              "path": "/delivery/mestokens.dico",
+              "name": "password"
+            }
+          ]
+        },
+        {
+          "hostname": "production03",
+          "user": "useradm",
+          "access": "production03:22"
+        },
+        {
+          "hostname": "production03",
+          "user": "useradm",
+          "access": "production03:22"
+        }
+      ]
+    },
+    {
+      "Type": "Consumer_slave",
+      "nodes": [
+        {
+          "hostname": "MacBook-Pro-de-Olivier.local",
+          "user": "useradm",
+          "access": [
+		{
+		"driver": "sudo"
+		"arguments": "user=:$user"
+		}
+	  ]
+          "datasource": [
+            {
+              "driver": "BDD",
+              "name": "tech_tokens"
+            },
+            {
+              "driver": "FILE",
+              "path": "/delivery/mestokens.dico",
+              "name": "password"
+            }
+          ]
+        },
+        {
+          "hostname": "production03",
+          "user": "useradm",
+          "access": "production03:22"
+        },
+        {
+          "hostname": "production03",
+          "user": "useradm",
+          "access": "production03:22"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+digraph ProduitsMobiles {
+    layer3 -> weblogic
+    layer3 -> apache
+    layer3 -> oracle
+    oracle -> layer5
+    apache -> layer5
+    weblogic -> layer5
+}

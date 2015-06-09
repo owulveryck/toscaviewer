@@ -1,0 +1,4 @@
+#!/bin/ksh
+
+# Dummy module that display hello world !
+echo "Hello World!, I'm running as $(whoami) on $(hostname)"

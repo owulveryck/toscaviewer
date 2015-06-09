@@ -1,0 +1,7 @@
+digraph {
+	Purge -> CreateSlot
+	CreateSlot -> StartJVM1
+	CreateSlot -> StartJVM2
+	StartJVM1 -> *topology
+	StartJVM2 -> *topology
+}

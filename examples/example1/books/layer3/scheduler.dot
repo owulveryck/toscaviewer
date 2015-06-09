@@ -1,0 +1,12 @@
+digraph {
+        Pilotage -> Ref1 [ label = "access(admin)" ];
+        Pilotage -> Ref2 [ label = "access(principal)" ];
+ 
+	Ref1 -> Ref1 [ label = "access(sudo)" ];
+        Ref1 -> WebServers;
+        Ref1 -> Consumers_Maitre;
+        Consumers_Maitre -> Consumers_Slave;
+        Ref1 -> Producteurs;
+ 
+        Ref2 -> BDD;
+}

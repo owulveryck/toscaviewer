@@ -1,0 +1,9 @@
+digraph layer3Tasks {
+	start -> purge;
+	purge -> installProduit1;
+	purge -> installProduit2;
+	installProduit1 -> startAll;
+	installProduit2 -> startAll;
+	startAll -> end;	
+
+}
