@@ -8,43 +8,69 @@ import (
 	"io"
 )
 
-
 // PrintDot convert the ToscaDefinitionure in dot format
 // in order to generate a graph with graphviz
 // This function is mostly used for debugging purpose and may change a lot in the future
 func PrintDot(w io.Writer, topology toscalib.ToscaDefinition) {
-	fmt.Fprintf(w, "digraph G {\n")
-	fmt.Fprintf(w, "\tgraph [ rankdir = \"LR\" ];\n")
-	fmt.Printf("digraph G {\n")
-	fmt.Printf("\tgraph [ rankdir = \"LR\" ];\n")
+	dotCode := fmt.Sprintf("digraph G {\n")
+	dotCode = fmt.Sprintf("%v\tgraph [ rankdir = \"LR\" ];\n", dotCode)
 	for nodeName, nodeDetail := range topology.TopologyTemplate.NodeTemplates {
-	        // For each node, create a record
-		fmt.Fprintf(w,"\t%v [label=\"<nodeName> %v|<nodeType> %v",nodeName, nodeName, nodeDetail.Type)
-		fmt.Printf("\t%v [label=\"<nodeName> %v|<nodeType> %v",nodeName, nodeName, nodeDetail.Type)
+		// For each node, create a record
+		dotCode = fmt.Sprintf("%v\t%v [label=\"<nodeName> %v|<nodeType> %v", dotCode, nodeName, nodeName, nodeDetail.Type)
 		//Display the properties
-		if nodeDetail.Properties != nil  {
-		    fmt.Fprintf(w, "|{Properties|{")
-		    fmt.Printf("|{Properties|{")
-		    for property, _ := range nodeDetail.Properties {
-			fmt.Fprintf(w,"%v|",property)
-			fmt.Printf("%v|",property)
-		    }
-		    fmt.Fprintf(w, "}}")
-		    fmt.Printf("}}")
+		if nodeDetail.Properties != nil {
+			dotCode = fmt.Sprintf("%v|{Properties|{", dotCode)
+			for property, _ := range nodeDetail.Properties {
+				dotCode = fmt.Sprintf("%v%v|", dotCode, property)
+			}
+			dotCode = fmt.Sprintf("%v}}", dotCode)
 		}
-		fmt.Fprintf(w,"\" shape=record style=rounded color=blue]\n")
-		fmt.Printf("\" shape=record style=rounded color=blue]\n")
+		// Display the requirements
+		if nodeDetail.Requirements != nil {
+			dotCode = fmt.Sprintf("%v|{Requirements|{", dotCode)
+			i := 0
+			pipe := "|"
+			for _, requirementAssignements := range nodeDetail.Requirements {
+				for requirement, _ := range requirementAssignements {
+					if i == len(requirementAssignements) {
+						pipe = ""
+					}
+					i = i + 1
+					dotCode = fmt.Sprintf("%v<%v>%v%v", dotCode, requirement, requirement, pipe)
+				}
+			}
+			dotCode = fmt.Sprintf("%v}}", dotCode)
+		}
+		// Display the capabilities
+		dotCode = fmt.Sprintf("%v|{<capabilities>Capabilities|{", dotCode)
+		if nodeDetail.Capabilities != nil {
+			i := 1
+			pipe := "|"
+			for capability, _ := range nodeDetail.Capabilities {
+				if i == len(nodeDetail.Capabilities) {
+					pipe = ""
+				}
+				i = i + 1
+				dotCode = fmt.Sprintf("%v<%v>%v%v", dotCode, capability, capability, pipe)
+			}
+		}
+		dotCode = fmt.Sprintf("%v}}", dotCode)
+
+		dotCode = fmt.Sprintf("%v\" shape=record style=rounded color=blue]\n", dotCode)
 		// If requirements are found
-//		fmt.Fprintf(w, "\t\"%v\" [ label = \"%v\" shape = circle color=blue]\n", nodeName, nodeName)
-		fmt.Fprintf(w, "\t\"%v\" [ label = \"%v\" shape = record color=red]\n", nodeDetail.Type, nodeDetail.Type)
-		//fmt.Fprintf(w, "\t\"%v\" -> \"%v\" [ color = red ]\n", nodeDetail.Type, nodeName)
+		//		dotCode = fmt.Sprintf( "\t\"%v\" [ label = \"%v\" shape = circle color=blue]\n", nodeName, nodeName)
+		//		dotCode = fmt.Sprintf( "\t\"%v\" [ label = \"%v\" shape = record color=red]\n", nodeDetail.Type, nodeDetail.Type)
+		//dotCode = fmt.Sprintf( "\t\"%v\" -> \"%v\" [ color = red ]\n", nodeDetail.Type, nodeName)
 		if nodeDetail.Requirements != nil {
 			for _, requirementAssignements := range nodeDetail.Requirements {
-			    for requirementName , requirementAssignement := range requirementAssignements {
-				fmt.Fprintf(w, "\t%v -> %v [label = %v];\n", nodeName, requirementAssignement.Node, requirementName)
-			    }
+				for requirementName, requirementAssignement := range requirementAssignements {
+
+					dotCode = fmt.Sprintf("%v\t%v:%v -> %v:capabilities [label = %v color=red];\n", dotCode, nodeName, requirementName, requirementAssignement.Node, requirementName)
+				}
 			}
 		}
 	}
-	fmt.Fprintf(w, "}\n")
+	dotCode = fmt.Sprintf("%v}\n", dotCode)
+	fmt.Printf("DEBUG: \n%v\n", dotCode)
+	fmt.Fprintf(w, "%v", dotCode)
 }
