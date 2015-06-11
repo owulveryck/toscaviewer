@@ -15,7 +15,7 @@ type Route struct {
 
 type Routes []Route
 
-func NewRouter(topology toscalib.TopologyTemplateStruct) *mux.Router {
+func NewRouter(topology toscalib.ToscaDefinition) *mux.Router {
 
 	router := mux.NewRouter().StrictSlash(true)
 	router.Headers("Content-Type", "application/json", "X-Requested-With", "XMLHttpRequest")

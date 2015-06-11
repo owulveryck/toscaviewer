@@ -7,10 +7,10 @@ import (
 	"github.com/owulveryck/toscalib"
 	"io"
 )
-// PrintDot convert the TopologyTemplateStructure in dot format
+// PrintDot convert the ToscaDefinitionure in dot format
 // in order to generate a graph with graphviz
 // This function is mostly used for debugging purpose and may change a lot in the future
-func PrintDot(w io.Writer, topology toscalib.TopologyTemplateStruct) {
+func PrintDot(w io.Writer, topology toscalib.ToscaDefinition) {
 	fmt.Fprintf(w, "digraph G {\n")
 	fmt.Fprintf(w, "\tgraph [ rankdir = \"LR\" ];\n")
 	for nodeName, nodeDetail := range topology.TopologyTemplate.NodeTemplates {

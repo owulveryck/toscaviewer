@@ -10,7 +10,7 @@ import (
 	"os/exec"
 )
 
-func displaySvg(w http.ResponseWriter, r *http.Request, topology toscalib.TopologyTemplateStruct) {
+func displaySvg(w http.ResponseWriter, r *http.Request, topology toscalib.ToscaDefinition) {
 	subProcess := exec.Command("dot", "-Tsvg")
 
 	stdin, err := subProcess.StdinPipe()
