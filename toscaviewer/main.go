@@ -17,7 +17,7 @@ func main() {
 	var testFile = flag.String("testfile","../examples/tosca_single_instance_wordpress.yaml", "a tosca yaml file to process")
 	flag.Parse()
 
-	var topologyTemplate toscalib.TopologyTemplateStruct
+	var topologyTemplate toscalib.ToscaDefinition
 	file, err := ioutil.ReadFile(*testFile)
 	if err != nil {
 		log.Panic("error: ", err)
