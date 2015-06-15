@@ -28,7 +28,7 @@ func NewRouter(topology toscalib.ToscaDefinition) *mux.Router {
 	//router.Methods("GET").Path("/tasks").Name("TaskIndex").HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 	//	showTasks(w, r, topology)
 	//})
-	router.PathPrefix("/").Handler(http.FileServer(http.Dir("../htdocs/static/")))
+	router.PathPrefix("/").Handler(http.FileServer(http.Dir("../htdocs/")))
 
 	return router
 }
