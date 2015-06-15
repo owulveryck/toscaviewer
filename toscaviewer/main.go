@@ -25,35 +25,53 @@ func main() {
 	var testFile = flag.String("testfile", example, "a tosca yaml file to process")
 	flag.Parse()
 
-	var topologyTemplate toscalib.ToscaDefinition
+	var toscaTemplate toscalib.ToscaDefinition
 	file, err := os.Open(*testFile)
 
 	if err != nil {
 		log.Panic("error: ", err)
 	}
-	err = topologyTemplate.Parse(file)
-	//err = yaml.Unmarshal(file, &topologyTemplate)
+	//err = yaml.Unmarshal(file, &toscaTemplate)
+	err = toscaTemplate.Parse(file)
 	if err != nil {
 		log.Panic("error: ", err)
 	}
 	// Here we have the structure
 	// Count the nodes
 
-	//log.Printf("Found %v nodes\n", len(topologyTemplate.TopologyTemplate.NodeTemplates))
-	nodeNum := len(topologyTemplate.TopologyTemplate.NodeTemplates)
+	//log.Printf("Found %v nodes\n", len(toscaTemplate.TopologyTemplate.NodeTemplates))
+	nodeNum := len(toscaTemplate.TopologyTemplate.NodeTemplates)
 	i := 0
 	nodeReferences := make(map[string]int, nodeNum)
-	for nodeName, _ := range topologyTemplate.TopologyTemplate.NodeTemplates {
+	for nodeName, _ := range toscaTemplate.TopologyTemplate.NodeTemplates {
 		nodeReferences[nodeName] = i
 		i = i + 1
 	}
 	// Create an adjacency Matrix
 	//adjacencyMatrix := mat64.NewDense(nodeNum, nodeNum, nil)
 
-	// This is the web displa
-	router := toscaviewer.NewRouter(topologyTemplate)
+	// TEST the implementation of the node type instanciation
+	for nodeName, nodeImplementation := range toscaTemplate.TopologyTemplate.NodeTemplates {
+		log.Printf("Playing %v", nodeName)
+		switch nodeImplementation.Type {
+		case "tosca.nodes.Compute":
+			//var test toscaviewer.ToscaNodesCompute
+			test := toscaviewer.ToscaNodesCompute(nodeImplementation)
+			var testInterface toscalib.ToscaInterfacesNodeLifecycleStandarder
+			testInterface = &test
+			testInterface.Create()
+		default:
+			test := toscaviewer.DefaultNodeType(nodeImplementation)
+			var testInterface toscalib.ToscaInterfacesNodeLifecycleStandarder
+			testInterface = &test
+			testInterface.Create()
+		}
+	}
+
+	// This is the web display
+	router := toscaviewer.NewRouter(toscaTemplate)
 
 	go log.Fatal(http.ListenAndServe(":8080", router))
-	log.Println("connect here: http://localhost:8080/svg")
+	//log.Println("connect here: http://localhost:8080/svg")
 
 }
