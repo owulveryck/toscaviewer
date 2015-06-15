@@ -1,28 +1,38 @@
 package main
 
 import (
-	"io/ioutil"
 	"log"
 	"net/http"
 
-	//"github.com/gonum/matrix/mat64"
+	"flag"
+	"fmt"
 	"github.com/owulveryck/toscalib"
 	"github.com/owulveryck/toscaviewer"
-	"gopkg.in/yaml.v2"
-	"flag"
+	"os"
+	"path/filepath"
 )
 
 func main() {
 
-	var testFile = flag.String("testfile","../examples/tosca_single_instance_wordpress.yaml", "a tosca yaml file to process")
+	// Get the rooted path name of the current directory
+	pwd, err := os.Getwd()
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+	example := fmt.Sprintf("%v/../examples/tosca_single_instance_wordpress.yaml", pwd)
+	example = filepath.Clean(example)
+	var testFile = flag.String("testfile", example, "a tosca yaml file to process")
 	flag.Parse()
 
 	var topologyTemplate toscalib.ToscaDefinition
-	file, err := ioutil.ReadFile(*testFile)
+	file, err := os.Open(*testFile)
+
 	if err != nil {
 		log.Panic("error: ", err)
 	}
-	err = yaml.Unmarshal(file, &topologyTemplate)
+	err = topologyTemplate.Parse(file)
+	//err = yaml.Unmarshal(file, &topologyTemplate)
 	if err != nil {
 		log.Panic("error: ", err)
 	}

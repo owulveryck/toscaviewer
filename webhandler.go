@@ -10,14 +10,14 @@ import (
 	"os/exec"
 )
 
-func displaySvg(w http.ResponseWriter, r *http.Request, topology toscalib.ToscaDefinition) {
+func displaySvg(w http.ResponseWriter, r *http.Request, topology toscalib.ToscaDefinition, printtype string) {
 	subProcess := exec.Command("dot", "-Tsvg")
 
-	stdin, err := subProcess.StdinPipe()
+	stdinOfDotProcess, err := subProcess.StdinPipe()
 	if err != nil {
 		fmt.Println(err) //replace with logger, or anything you want
 	}
-	defer stdin.Close() // the doc says subProcess.Wait will close it, but I'm not sure, so I kept this line
+	defer stdinOfDotProcess.Close() // the doc says subProcess.Wait will close it, but I'm not sure, so I kept this line
 
 	subProcess.Stdout = w
 	subProcess.Stderr = os.Stderr
@@ -25,9 +25,14 @@ func displaySvg(w http.ResponseWriter, r *http.Request, topology toscalib.ToscaD
 		fmt.Println("An error occured: ", err) //replace with logger, or anything you want
 
 	}
-	PrintDot(stdin, topology)
+	switch printtype {
+	case "functionnal":
+		topology.PrintDot(stdinOfDotProcess)
+	case "workflow":
+		topology.DotExecutionWorkflow(stdinOfDotProcess)
+	}
 	// Command was successful
-	stdin.Close()
+	stdinOfDotProcess.Close()
 	subProcess.Wait()
 
 }
