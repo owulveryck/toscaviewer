@@ -54,34 +54,31 @@
   </head>
 
   <body>
+<div class="container-fluid">
+  <h2>ToscaViewer / GO</h2>
+  <ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#toscaFile">The content of the tosca file</a></li>
+    <li><a data-toggle="tab" href="#toscaGraph">The tosca Graph</a></li>
+    <li><a data-toggle="tab" href="#toscaWorkflow">The execution workflow</a></li>
+  </ul>
 
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">Project name</a>
-        </div>
-        <div id="navbar" class="collapse navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li><a href="/tosca.html">ToscaDescription</a></li>
-            <li><a href="/workflow.html">ToscaWorkflow</a></li>
-          </ul>
-        </div><!--/.nav-collapse -->
-      </div>
-    </nav>
-
-    <div class="map">
-
-      <div class="map">
-        <object data="/tosca" type="image/svg+xml" id="svg"/>
-      </div>
-
-    </div><!-- /.container -->
+  <div class="tab-content">
+    <div id="toscaFile" class="tab-pane fade in active">
+      <h3>TOSCAFILE</h3>
+      <p>content of the tosca file</p>
+    </div>
+    <div id="toscaGraph" class="tab-pane fade">
+          <iframe class="embed-responsive-item" src="/tosca"></iframe>
+    </div>
+    <div id="toscaWorkflow" class="tab-pane fade">
+          <iframe class="embed-responsive-item" src="/workflow"></iframe>
+    </div>
+    <div id="menu3" class="tab-pane fade">
+      <h3>Menu 3</h3>
+      <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+    </div>
+  </div>
+</div>
 
 
     <!-- Bootstrap core JavaScript
