@@ -10,3 +10,8 @@ If you have [graphviz](http://www.graphviz.org) installed, you can launch the ma
  cd $GOPATH/src/github.com/owulveryck/toscaviewer/toscaviewer
  go run main.go
 ```
+
+# Depedencies
+* The [graphviz](http://www.graphviz.org) program to generate the svg
+* bootstrap (included)
+* [http://www.gorillatoolkit.org/pkg/mux](the gorilla web toolkit) (go gettable)
