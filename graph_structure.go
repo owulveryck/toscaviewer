@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"fmt"
 	"github.com/owulveryck/toscalib"
-	"net/http"
 	"os"
 	"os/exec"
 )
@@ -13,19 +12,10 @@ import (
 // the structure is "in memory" by now for debugging purpose
 type ToscaGraph map[string][]byte
 
-func (toscaGraph ToscaGraph) ViewToscaDefinition(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "image/svg+xml; charset=UTF-8")
-	fmt.Fprintf(w, string(toscaGraph["ToscaDefinition"]))
-}
-func (toscaGraph ToscaGraph) ViewToscaWorkflow(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "image/svg+xml; charset=UTF-8")
-	fmt.Fprintf(w, string(toscaGraph["ToscaWorkflow"]))
-}
-
 // Initialize the ToscaGraph
 func (toscaGraph *ToscaGraph) Initialize(toscaDefinition toscalib.ToscaDefinition) error {
 	var tempGraph ToscaGraph
-	tempGraph = make(map[string][]byte, 2)
+	tempGraph = make(map[string][]byte, 3)
 	for i, value := range []string{"ToscaDefinition", "ToscaWorkflow"} {
 		dotProcess := exec.Command("dot", "-Tsvg")
 
@@ -63,6 +53,7 @@ func (toscaGraph *ToscaGraph) Initialize(toscaDefinition toscalib.ToscaDefinitio
 		//toscaDefinition.DotExecutionWorkflow(stdinOfDotProcess)
 		dotProcess.Wait()
 	}
+	tempGraph["ToscaYaml"] = toscaDefinition.Bytes()
 	//*toscaGraph = ToscaGraph(make(map[string][]byte, 2))
 	*toscaGraph = tempGraph
 	return nil

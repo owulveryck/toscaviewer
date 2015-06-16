@@ -30,6 +30,12 @@ func NewRouter(toscaGraph ToscaGraph) *mux.Router {
 			"/workflow.svg",
 			toscaGraph.ViewToscaWorkflow,
 		},
+		Route{
+			"Tosca file",
+			"GET",
+			"/tosca.yaml",
+			toscaGraph.ViewToscaYaml,
+		},
 	}
 	router := mux.NewRouter().StrictSlash(true)
 	//router.Headers("Content-Type", "application/json", "X-Requested-With", "XMLHttpRequest")

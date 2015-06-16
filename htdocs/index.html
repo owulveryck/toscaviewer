@@ -40,7 +40,7 @@
     <link href="/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="starter-template.css" rel="stylesheet">
+    <link href="normalize.css" rel="stylesheet">
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -57,11 +57,35 @@
 <div class="container-fluid">
   <h2>ToscaViewer / GO</h2>
   <ul class="nav nav-tabs">
-    <li class="active"><a data-toggle="tab" href="#toscaFile">The content of the tosca file</a></li>
+    <li class="active"><a data-toggle="tab" href="#toscaSource">Tosca viewer main page</a></li>
     <li><a data-toggle="tab" href="#toscaGraph">The tosca Graph</a></li>
     <li><a data-toggle="tab" href="#toscaWorkflow">The execution workflow</a></li>
   </ul>
-
+    <div class="row">
+        <form role="form" action="/uploadtosca">
+            <span class="btn btn-default btn-file">
+                <input type="file">
+            </span>
+            <button type="submit" class="btn btn-default">Upload!</button>
+        </form>
+    </div>
+    <div class="row">
+        <div class="col-sm-1">
+            <div class="form-group">
+                <br/>
+                <form role="form">
+            </div>
+            <div class="form-group">
+                <input type="login" class="form-control" id="email" placeholder="Login">
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" id="pwd" placeholder="Password">
+            </div>
+                <button type="submit" class="btn btn-default">Run the file</button>
+            </form>
+  <br/>
+    </div>
+    <div class="col-sm-11">
   <div class="tab-content">
     <div id="toscaFile" class="tab-pane fade in active">
       <h3>TOSCAFILE</h3>
@@ -73,10 +97,13 @@
     <div id="toscaWorkflow" class="tab-pane fade">
         <img class="img-responsive" src="/workflow.svg" alt="SVG Representation of the workflow file">
     </div>
-    <div id="menu3" class="tab-pane fade">
-      <h3>Menu 3</h3>
-      <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+    <div id="toscaSource" class="tab-pane fade">
+        <div class="embed-responsive embed-responsive-16by9">
+            <iframe class="embed-responsive-item" src="/tosca.yaml"></iframe>
+        </div> 
     </div>
+  </div>
+</div>
   </div>
 </div>
 
