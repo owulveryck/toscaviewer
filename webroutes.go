@@ -5,32 +5,32 @@ import (
 	"net/http"
 )
 
-type Route struct {
+type route struct {
 	Name        string
 	Method      string
 	Pattern     string
 	HandlerFunc http.HandlerFunc
 }
 
-type Routes []Route
+type routes []route
 
 func NewRouter(toscaGraph ToscaGraph) *mux.Router {
 
 	// Definition des routes
-	var routes = Routes{
-		Route{
+	var routes = routes{
+		route{
 			"Tosca diagram",
 			"GET",
 			"/tosca.svg",
 			toscaGraph.ViewToscaDefinition,
 		},
-		Route{
+		route{
 			"Execution workflow",
 			"GET",
 			"/workflow.svg",
 			toscaGraph.ViewToscaWorkflow,
 		},
-		Route{
+		route{
 			"Tosca file",
 			"GET",
 			"/tosca.yaml",

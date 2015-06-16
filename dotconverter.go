@@ -4,8 +4,9 @@ package toscaviewer
 // Thanks http://thenewstack.io/make-a-restful-json-api-go/ for the tutorial
 import (
 	"fmt"
-	"github.com/owulveryck/toscalib"
 	"io"
+
+	"github.com/owulveryck/toscalib"
 )
 
 // PrintDot convert the ToscaDefinitionure in dot format
@@ -71,6 +72,6 @@ func PrintDot(w io.Writer, topology toscalib.ToscaDefinition) {
 		}
 	}
 	dotCode = fmt.Sprintf("%v}\n", dotCode)
-	fmt.Printf("DEBUG: \n%v\n", dotCode)
+	//fmt.Printf("DEBUG: \n%v\n", dotCode)
 	fmt.Fprintf(w, "%v", dotCode)
 }
