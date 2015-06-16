@@ -2,7 +2,6 @@ package toscaviewer
 
 import (
 	"github.com/gorilla/mux"
-	"github.com/owulveryck/toscalib"
 	"net/http"
 )
 
@@ -15,19 +14,33 @@ type Route struct {
 
 type Routes []Route
 
-func NewRouter(topology toscalib.ToscaDefinition) *mux.Router {
+func NewRouter(toscaGraph ToscaGraph) *mux.Router {
 
+	// Definition des routes
+	var routes = Routes{
+		Route{
+			"Tosca diagram",
+			"GET",
+			"/tosca.svg",
+			toscaGraph.ViewToscaDefinition,
+		},
+		Route{
+			"Execution workflow",
+			"GET",
+			"/workflow.svg",
+			toscaGraph.ViewToscaWorkflow,
+		},
+	}
 	router := mux.NewRouter().StrictSlash(true)
-	router.Headers("Content-Type", "application/json", "X-Requested-With", "XMLHttpRequest")
-	router.Methods("GET").Path("/tosca").Name("SVG Representation").HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		displaySvg(w, r, topology, "functionnal")
-	})
-	router.Methods("GET").Path("/workflow").Name("SVG Representation").HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		displaySvg(w, r, topology, "workflow")
-	})
-	//router.Methods("GET").Path("/tasks").Name("TaskIndex").HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-	//	showTasks(w, r, topology)
-	//})
+	//router.Headers("Content-Type", "application/json", "X-Requested-With", "XMLHttpRequest")
+	for _, route := range routes {
+		router.
+			Methods(route.Method).
+			Path(route.Pattern).
+			Name(route.Name).
+			Handler(route.HandlerFunc)
+	}
+	// Define the access to the root of the web
 	router.PathPrefix("/").Handler(http.FileServer(http.Dir("../htdocs/")))
 
 	return router
