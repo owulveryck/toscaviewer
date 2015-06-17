@@ -57,7 +57,7 @@
 <div class="container-fluid">
   <h2>ToscaViewer / GO</h2>
   <ul class="nav nav-tabs">
-    <li class="active"><a data-toggle="tab" href="#toscaSource">Tosca viewer main page</a></li>
+      <li><a data-toggle="tab" href="#toscaSource">Tosca viewer main page</a></li>
     <li><a data-toggle="tab" href="#toscaGraph">The tosca Graph</a></li>
     <li><a data-toggle="tab" href="#toscaWorkflow">The execution workflow</a></li>
   </ul>
@@ -87,20 +87,16 @@
     </div>
     <div class="col-sm-11">
   <div class="tab-content">
-    <div id="toscaFile" class="tab-pane fade in active">
-      <h3>TOSCAFILE</h3>
-      <p>content of the tosca file</p>
+    <div id="toscaSource" class="tab-pane fade">
+        <div class="embed-responsive embed-responsive-16by9">
+            <iframe class="embed-responsive-item" src="/tosca.yaml"></iframe>
+        </div> 
     </div>
     <div id="toscaGraph" class="tab-pane fade">
         <img class="img-responsive" src="/tosca.svg" alt="SVG Representation of the tosca file">
     </div>
     <div id="toscaWorkflow" class="tab-pane fade">
         <img class="img-responsive" src="/workflow.svg" alt="SVG Representation of the workflow file">
-    </div>
-    <div id="toscaSource" class="tab-pane fade">
-        <div class="embed-responsive embed-responsive-16by9">
-            <iframe class="embed-responsive-item" src="/tosca.yaml"></iframe>
-        </div> 
     </div>
   </div>
 </div>
