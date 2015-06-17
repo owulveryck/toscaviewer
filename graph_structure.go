@@ -10,11 +10,15 @@ import (
 
 // ToscaGraph is a type holding the SVG representations of the graph
 // the structure is "in memory" by now for debugging purpose
-type ToscaGraph map[string][]byte
+type ToscaGraph struct {
+	Graph           map[string][]byte
+	ToscaDefinition *toscalib.ToscaDefinition
+}
 
-// Initialize the ToscaGraph
-func (toscaGraph *ToscaGraph) Initialize(toscaDefinition toscalib.ToscaDefinition) error {
-	var tempGraph ToscaGraph
+// Initialize the ToscaGrapg
+func (toscaGraph *ToscaGraph) Initialize() error {
+	toscaDefinition := *toscaGraph.ToscaDefinition
+	var tempGraph map[string][]byte
 	tempGraph = make(map[string][]byte, 3)
 	for i, value := range []string{"ToscaDefinition", "ToscaWorkflow"} {
 		dotProcess := exec.Command("dot", "-Tsvg")
@@ -55,6 +59,7 @@ func (toscaGraph *ToscaGraph) Initialize(toscaDefinition toscalib.ToscaDefinitio
 	}
 	tempGraph["ToscaYaml"] = toscaDefinition.Bytes()
 	//*toscaGraph = ToscaGraph(make(map[string][]byte, 2))
-	*toscaGraph = tempGraph
+	//(*toscaGraph).ToscaDefinition = &toscaDefinition
+	(*toscaGraph).Graph = tempGraph
 	return nil
 }

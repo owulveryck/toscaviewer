@@ -36,12 +36,7 @@ func main() {
 	if err != nil {
 		log.Panic("error: ", err)
 	}
-	// Initializing the ToscaGraph structure
-	var toscaGraph toscaviewer.ToscaGraph
-	toscaGraph.Initialize(toscaTemplate)
-
-	// This is the web display
-	router := toscaviewer.NewRouter(toscaGraph)
+	router := toscaviewer.NewRouter(&toscaTemplate)
 
 	log.Println("connect here: http://localhost:8080/svg")
 	log.Fatal(http.ListenAndServe(":8080", router))

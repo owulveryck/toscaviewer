@@ -2,6 +2,7 @@ package toscaviewer
 
 import (
 	"github.com/gorilla/mux"
+	"github.com/owulveryck/toscalib"
 	"net/http"
 )
 
@@ -14,7 +15,14 @@ type route struct {
 
 type routes []route
 
-func NewRouter(toscaGraph ToscaGraph) *mux.Router {
+func NewRouter(toscaTemplate *toscalib.ToscaDefinition) *mux.Router {
+	// Initializing the ToscaGraph structure
+	type ToscaDefinition toscalib.ToscaDefinition
+	var toscaGraph ToscaGraph
+	toscaGraph.ToscaDefinition = toscaTemplate
+	toscaGraph.Initialize()
+
+	// This is the web display
 
 	// Definition des routes
 	var routes = routes{
@@ -31,10 +39,16 @@ func NewRouter(toscaGraph ToscaGraph) *mux.Router {
 			toscaGraph.ViewToscaWorkflow,
 		},
 		route{
-			"Tosca file",
+			"Tosca",
 			"GET",
 			"/tosca.yaml",
 			toscaGraph.ViewToscaYaml,
+		},
+		route{
+			"Upload Tosca",
+			"POST",
+			"/upload",
+			(&toscaGraph).UploadHandler,
 		},
 	}
 	router := mux.NewRouter().StrictSlash(true)
