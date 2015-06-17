@@ -3,17 +3,17 @@ package toscaviewer
 // This is a basic example
 // Thanks http://thenewstack.io/make-a-restful-json-api-go/ for the tutorial
 import (
+	//"github.com/gorilla/mux"
 	"fmt"
-	"io"
 	"log"
 	"mime/multipart"
 	"net/http"
-	"os"
-	"strconv"
 )
 
 // UploadHandler courtesy of http://noypi-linux.blogspot.fr/2014/07/golang-web-server-basic-operatons-using.html
 func (toscaGraph *ToscaGraph) UploadHandler(res http.ResponseWriter, req *http.Request) {
+	// For the redirect at the end
+	//url, _ := mux.CurrentRoute(req).Subrouter().Get("/index.html").URL()
 	log.Println("UploadHandler called")
 	var (
 		status int
@@ -38,33 +38,18 @@ func (toscaGraph *ToscaGraph) UploadHandler(res http.ResponseWriter, req *http.R
 				status = http.StatusInternalServerError
 				return
 			}
-			log.Println("Got file:", hdr.Filename)
 
-			outfile := os.Stdout
-			/*
-				// open destination
-				var outfile *os.File
-				if outfile, err = os.Create("./uploaded/" + hdr.Filename); nil != err {
-					status = http.StatusInternalServerError
-					return
-				}
-			*/
-			// 32K buffer copy
-			var written int64
-			if written, err = io.Copy(outfile, infile); nil != err {
-				status = http.StatusInternalServerError
-				return
-			}
 			err = toscaGraph.ToscaDefinition.Parse(infile)
-			res.Write([]byte(toscaGraph.ToscaDefinition.Bytes()))
+			//res.Write([]byte(toscaGraph.ToscaDefinition.Bytes()))
 			if err != nil {
 				log.Println(err)
 			}
 			toscaGraph.Initialize()
-			res.Write([]byte("uploaded file:" + hdr.Filename + ";length:" + strconv.Itoa(int(written))))
+			//http.Redirect(res, req, url.String(), http.StatusFound)
+			//res.Write([]byte("uploaded file:" + hdr.Filename + ";length:" + strconv.Itoa(int(written))))
 		}
 	}
-
+	http.Redirect(res, req, "/", http.StatusFound)
 }
 
 func (toscaGraph ToscaGraph) ViewToscaYaml(w http.ResponseWriter, r *http.Request) {

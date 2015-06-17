@@ -62,6 +62,7 @@ func NewRouter(toscaTemplate *toscalib.ToscaDefinition) *mux.Router {
 	}
 	// Define the access to the root of the web
 	router.PathPrefix("/").Handler(http.FileServer(http.Dir("../htdocs/")))
+	router.Headers("Cache-Control", "no-cache, no-store, must-revalidate")
 
 	return router
 }
