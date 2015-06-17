@@ -15,6 +15,7 @@ type route struct {
 
 type routes []route
 
+// NewRouter is a new router instance.
 func NewRouter(toscaTemplate *toscalib.ToscaDefinition) *mux.Router {
 	// Initializing the ToscaGraph structure
 	type ToscaDefinition toscalib.ToscaDefinition

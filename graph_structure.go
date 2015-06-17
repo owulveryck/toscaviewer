@@ -15,7 +15,10 @@ type ToscaGraph struct {
 	ToscaDefinition *toscalib.ToscaDefinition
 }
 
-// Initialize the ToscaGrapg
+// Initialize the ToscaGraph structure
+// This function executes the dot process on the dot representation of the current tosca definition
+// It generates a svg representation of the tosca definition and another svg representation of the execution workflow
+// according the standard lifecycle
 func (toscaGraph *ToscaGraph) Initialize() error {
 	toscaDefinition := *toscaGraph.ToscaDefinition
 	var tempGraph map[string][]byte

@@ -3,7 +3,6 @@ package toscaviewer
 // This is a basic example
 // Thanks http://thenewstack.io/make-a-restful-json-api-go/ for the tutorial
 import (
-	//"github.com/gorilla/mux"
 	"fmt"
 	"log"
 	"mime/multipart"
@@ -52,14 +51,19 @@ func (toscaGraph *ToscaGraph) UploadHandler(res http.ResponseWriter, req *http.R
 	http.Redirect(res, req, "/", http.StatusFound)
 }
 
+// ViewToscaYaml is a http handler that output the yaml file
 func (toscaGraph *ToscaGraph) ViewToscaYaml(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text; charset=UTF-8")
 	fmt.Fprintf(w, string(toscaGraph.Graph["ToscaYaml"]))
 }
+
+// ViewToscaDefinition is a http handler that output the SVG representation of the current tosca structure
 func (toscaGraph *ToscaGraph) ViewToscaDefinition(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "image/svg+xml; charset=UTF-8")
 	fmt.Fprintf(w, string(toscaGraph.Graph["ToscaDefinition"]))
 }
+
+// ViewToscaWorkfow is a http handler that output the SVG representation of the current tosca execution workflow
 func (toscaGraph *ToscaGraph) ViewToscaWorkflow(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "image/svg+xml; charset=UTF-8")
 	fmt.Fprintf(w, string(toscaGraph.Graph["ToscaWorkflow"]))
