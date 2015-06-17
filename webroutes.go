@@ -30,19 +30,19 @@ func NewRouter(toscaTemplate *toscalib.ToscaDefinition) *mux.Router {
 			"Tosca diagram",
 			"GET",
 			"/tosca.svg",
-			toscaGraph.ViewToscaDefinition,
+			(&toscaGraph).ViewToscaDefinition,
 		},
 		route{
 			"Execution workflow",
 			"GET",
 			"/workflow.svg",
-			toscaGraph.ViewToscaWorkflow,
+			(&toscaGraph).ViewToscaWorkflow,
 		},
 		route{
 			"Tosca",
 			"GET",
 			"/tosca.yaml",
-			toscaGraph.ViewToscaYaml,
+			(&toscaGraph).ViewToscaYaml,
 		},
 		route{
 			"Upload Tosca",

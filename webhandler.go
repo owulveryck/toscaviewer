@@ -52,15 +52,15 @@ func (toscaGraph *ToscaGraph) UploadHandler(res http.ResponseWriter, req *http.R
 	http.Redirect(res, req, "/", http.StatusFound)
 }
 
-func (toscaGraph ToscaGraph) ViewToscaYaml(w http.ResponseWriter, r *http.Request) {
+func (toscaGraph *ToscaGraph) ViewToscaYaml(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text; charset=UTF-8")
 	fmt.Fprintf(w, string(toscaGraph.Graph["ToscaYaml"]))
 }
-func (toscaGraph ToscaGraph) ViewToscaDefinition(w http.ResponseWriter, r *http.Request) {
+func (toscaGraph *ToscaGraph) ViewToscaDefinition(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "image/svg+xml; charset=UTF-8")
 	fmt.Fprintf(w, string(toscaGraph.Graph["ToscaDefinition"]))
 }
-func (toscaGraph ToscaGraph) ViewToscaWorkflow(w http.ResponseWriter, r *http.Request) {
+func (toscaGraph *ToscaGraph) ViewToscaWorkflow(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "image/svg+xml; charset=UTF-8")
 	fmt.Fprintf(w, string(toscaGraph.Graph["ToscaWorkflow"]))
 }
