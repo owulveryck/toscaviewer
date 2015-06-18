@@ -73,8 +73,8 @@
         <div class="col-sm-1">
             <div class="form-group">
                 <br/>
-                <form role="form">
             </div>
+                <form role="form" action="null">
             <div class="form-group">
                 <input type="login" class="form-control" id="email" placeholder="Login">
             </div>
@@ -93,10 +93,16 @@
         </div> 
     </div>
     <div id="toscaGraph" class="tab-pane fade">
-        <img class="img-responsive" src="/tosca.svg" alt="SVG Representation of the tosca file">
+        <object data="/tosca.svg" type="image/svg+xml" id="toscaSVG"/>
+            <!--
+        <img class="img-responsive" id="toscaSVG" src="/tosca.svg" alt="SVG Representation of the tosca file">
+            -->
     </div>
     <div id="toscaWorkflow" class="tab-pane fade">
+        <object data="/workflow.svg" type="image/svg+xml"/>
+            <!--
         <img class="img-responsive" src="/workflow.svg" alt="SVG Representation of the workflow file">
+            -->
     </div>
   </div>
 </div>
@@ -109,7 +115,52 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="/jquery.min.js"></script>
     <script src="/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <!--<script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>-->
+    <!-- update the color -->
+    <script type="text/javascript">
+        function updateGraph(svgRoot) {
+            $.getJSON( "/getstate.json", function() {
+                //console.log( "success!" );
+                }).done(function(data) {
+                    for (var i in data){
+                        //console.log(data[i].state);
+                        switch (data[i].state) {
+                            case 0:
+                                color = 'rgba(34, 209, 23, 0.3)'
+                                break;
+                            case -3:
+                                color = 'rgba(10, 0, 0, 0.5)'
+                                break;
+                            case -2:
+                                color = 'rgba(73, 151, 41, 0.3)'
+                                break;
+                            case -1:
+                                color = 'rgba(34, 131, 201, 0.3)'
+                                break;
+                            default:
+                                color = 'rgba(230, 0, 0, 0.5)'
+                        }
+                        $("#" + data[i].id,svgRoot).children("text").css({'fill': color});
+                        //$("#" + data[i].id,svgRoot).children("polygon").css({'fill': color});
+                    }
+                });
+                    setTimeout(function() {
+                            updateGraph(svgRoot);
+                    }, 20000)
+        }
+        $(document).ready(function(){
+            var a = document.getElementById("toscaSVG");
+
+            // Some help from http://stackoverflow.com/questions/6793312/how-to-use-jquery-in-svg-scalable-vector-graphics
+            //it's important to add an load event listener to the object, as it will load the svg doc asynchronously
+            a.addEventListener("load",function(){
+                var svgDoc = a.contentDocument; //get the inner DOM of alpha.svg
+                var svgRoot  = svgDoc.documentElement;
+                updateGraph(svgRoot);
+                //now we can query stuff with jquery like this
+                //note that we pass in the svgRoot as the context node!
+            },false);
+        })
+    </script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->    <!--<script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>-->
   </body>
 </html>

@@ -51,6 +51,12 @@ func NewRouter(toscaTemplate *toscalib.ToscaDefinition) *mux.Router {
 			"/upload",
 			(&toscaGraph).UploadHandler,
 		},
+		route{
+			"Get State",
+			"GET",
+			"/getstate.json",
+			(&toscaGraph).GetState,
+		},
 	}
 	router := mux.NewRouter().StrictSlash(true)
 	//router.Headers("Content-Type", "application/json", "X-Requested-With", "XMLHttpRequest")

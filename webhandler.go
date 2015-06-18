@@ -3,6 +3,7 @@ package toscaviewer
 // This is a basic example
 // Thanks http://thenewstack.io/make-a-restful-json-api-go/ for the tutorial
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"mime/multipart"
@@ -49,6 +50,15 @@ func (toscaGraph *ToscaGraph) UploadHandler(res http.ResponseWriter, req *http.R
 		}
 	}
 	http.Redirect(res, req, "/", http.StatusFound)
+}
+
+// GetState returns a json file of the current topology
+func (toscaGraph *ToscaGraph) GetState(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	d, err := json.Marshal(toscaGraph.ToscaDefinition.TopologyTemplate.NodeTemplates)
+	if err == nil {
+		fmt.Fprintf(w, string(d))
+	}
 }
 
 // ViewToscaYaml is a http handler that output the yaml file
