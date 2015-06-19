@@ -89,17 +89,32 @@
   <div class="tab-content">
     <div id="toscaSource" class="tab-pane fade">
         <div class="embed-responsive embed-responsive-16by9">
-            <iframe class="embed-responsive-item" src="/tosca.yaml"></iframe>
+        <iframe class="embed-responsive-item" src="/tosca.yaml"></iframe>
+            <!--
+        <table data-toggle="table" data-url="/getstate.json" data-cache="false" data-height="299">
+            <thead>
+                <tr>
+                    <th data-field="id">Item ID</th>
+                    <th data-field="name">Item Name</th>
+                    <th data-field="price">Item Price</th>
+                </tr>
+            </thead>
+        </table>
+        -->
         </div> 
     </div>
     <div id="toscaGraph" class="tab-pane fade">
-        <object data="/tosca.svg" type="image/svg+xml" id="toscaSVG"/>
+        <div class="embed-responsive embed-responsive-16by9">
+            <object class="embed-responsive-item" data="/tosca.svg" type="image/svg+xml" id="toscaSVG">blabla</object>
+        </div>
             <!--
         <img class="img-responsive" id="toscaSVG" src="/tosca.svg" alt="SVG Representation of the tosca file">
             -->
     </div>
     <div id="toscaWorkflow" class="tab-pane fade">
-        <object data="/workflow.svg" type="image/svg+xml"/>
+        <div class="embed-responsive embed-responsive-16by9">
+            <object class="embed-responsive-item" data="/workflow.svg" type="image/svg+xml"/>
+        </div>
             <!--
         <img class="img-responsive" src="/workflow.svg" alt="SVG Representation of the workflow file">
             -->
@@ -125,15 +140,15 @@
                         //console.log(data[i].state);
                         switch (data[i].state) {
                             case 0:
-                                color = 'rgba(34, 209, 23, 0.3)'
+                                color = 'rgba(34, 209, 23, 0.7)'
                                 break;
-                            case -3:
+                            case 1:
                                 color = 'rgba(10, 0, 0, 0.5)'
                                 break;
-                            case -2:
+                            case 2:
                                 color = 'rgba(73, 151, 41, 0.3)'
                                 break;
-                            case -1:
+                            case 3:
                                 color = 'rgba(34, 131, 201, 0.3)'
                                 break;
                             default:
@@ -145,7 +160,7 @@
                 });
                     setTimeout(function() {
                             updateGraph(svgRoot);
-                    }, 20000)
+                    }, 2000)
         }
         $(document).ready(function(){
             var a = document.getElementById("toscaSVG");
