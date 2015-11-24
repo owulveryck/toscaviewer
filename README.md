@@ -15,3 +15,9 @@ If you have [graphviz](http://www.graphviz.org) installed, you can launch the ma
 * The [graphviz](http://www.graphviz.org) program to generate the svg
 * bootstrap (included)
 * [http://www.gorillatoolkit.org/pkg/mux](the gorilla web toolkit) (go gettable)
+
+# Screenshots
+
+![Template View](http://owulveryck.github.io/assets/images/toscaviewer_template_def.png)
+
+![Workflow View](http://owulveryck.github.io/assets/images/toscaviewer_lifecycle_def.png)
