@@ -12,7 +12,7 @@ import (
 // the structure is "in memory" by now for debugging purpose
 type ToscaGraph struct {
 	Graph           map[string][]byte
-	ToscaDefinition *toscalib.ToscaDefinition
+	ToscaDefinition *toscalib.ServiceTemplateDefinition
 }
 
 // Initialize the ToscaGraph structure
