@@ -25,7 +25,7 @@ func main() {
 	var testFile = flag.String("testfile", example, "a tosca yaml file to process")
 	flag.Parse()
 
-	var toscaTemplate toscalib.ToscaDefinition
+	var toscaTemplate toscalib.ServiceTemplateDefinition
 	file, err := os.Open(*testFile)
 
 	if err != nil {
