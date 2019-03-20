@@ -73,7 +73,7 @@ func (toscaGraph *ToscaGraph) ViewToscaDefinition(w http.ResponseWriter, r *http
 	fmt.Fprintf(w, string(toscaGraph.Graph["ToscaDefinition"]))
 }
 
-// ViewToscaWorkfow is a http handler that output the SVG representation of the current tosca execution workflow
+// ViewToscaWorkflow is a http handler that output the SVG representation of the current tosca execution workflow
 func (toscaGraph *ToscaGraph) ViewToscaWorkflow(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "image/svg+xml; charset=UTF-8")
 	fmt.Fprintf(w, string(toscaGraph.Graph["ToscaWorkflow"]))
